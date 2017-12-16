@@ -3,7 +3,7 @@
 
   After a week of googling and tests, i build this Class to communicate from php running on Linux (master) to an Arduino board via serial USB.
   
-  The master message max length is 60 char (serial Arduino rx buffer limit), the response (from Arduino) as no limits. The protocol uses CRC8 to insure correctness. In case of error the message is resended 3 times before exit in error state.
+  The master message max length is 60 char (serial Arduino rx buffer limit), the response (from Arduino) as no limits. The '\n' char is used internally as terminator. The protocol uses CRC8 to insure correctness. In case of error the message is resended 3 times before exit in error state.
   
  A Bash script (serialArduino.sh) is used to setup the USB device on Linux, after startup or USB connection.
   The serial communication is open for every message: in the Bash script the DTR pin is disabled to avoid the auto reset.

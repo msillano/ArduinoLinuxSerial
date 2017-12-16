@@ -6,15 +6,15 @@
   The master message max length is 60 char (serial Arduino rx buffer limit), the response (from Arduino) as no limits. The '\n' char is used internally as terminator. The protocol uses CRC8 to insure correctness. In case of error the message is resended 3 times before exit in error state.
   
  A Bash script (serialArduino.sh) is used to setup the USB device on Linux, after startup or USB connection.
-  The serial communication is open for every message: in the Bash script the DTR pin is disabled to avoid the auto reset.
+  The serial communication is open for every message: in the Bash script the DTR pin is disabled to avoid the Arduino auto reset.
   (see: https://playground.arduino.cc/Main/DisablingAutoResetOnSerialConnection)
 
  TROUBLESHOOTING
  
-  - ERROR LCRC: bad CRC Linux -> Arduino
+  -  ERROR LCRC: bad CRC Linux -> Arduino
   -  ERROR ACRC: bad CRC Arduino -> Linux
   -  ERROR CODE: sended a command code not implemented in Arduino
-  - ERROR SERIAL: USB not plugged, Arduino not running or fail in open the serial device.
+  -  ERROR SERIAL: USB not plugged, Arduino not running or php fail in open the serial device.
        In this case the file 'status.txt' contains: 'stty: /dev/ttyACM0: Inappropriate ioctl for device' ?? 
        Solution: disconect and reconnect Arduino USB
 
@@ -33,8 +33,8 @@ CONCLUSIONS
 
   ## see also
   
-     Using ArduinoLinuxSerial the Master is php, and you need the serial driver.
+     Using ArduinoLinuxSerial the Master is php, and you need the serial driver (uses devices like /dev/ACMx or /dev/USBx).
   
-     Using USBphpTunnel (https://github.com/msillano/USBphpTunnel) the master is Arduino, and you don't need serial driver.
+     Using USBphpTunnel (https://github.com/msillano/USBphpTunnel) the master is Arduino, and the Android app uses ports like /dev/bus/dev/00X/00Y, so you don't need serial driver.
      
      

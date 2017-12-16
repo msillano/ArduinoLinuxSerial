@@ -33,8 +33,10 @@ CONCLUSIONS
 
   ## see also
   
-     Using ArduinoLinuxSerial the Master is php, and you need the serial driver (uses devices like /dev/ACMx or /dev/USBx).
+     Using ArduinoLinuxSerial the Master is php, and you need the serial driver (uses devices like
+     /dev/ACMx or /dev/USBx).
   
-     Using USBphpTunnel (https://github.com/msillano/USBphpTunnel) the master is Arduino, and the Android app uses ports like /dev/bus/dev/00X/00Y, so you don't need serial driver.
+     Using USBphpTunnel (https://github.com/msillano/USBphpTunnel) the master is Arduino, and the
+     Android app uses ports like /dev/bus/dev/00X/00Y, so you don't need the serial driver.
      
      

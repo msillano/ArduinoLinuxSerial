@@ -34,9 +34,12 @@ CONCLUSIONS
   ## see also
   
      Using ArduinoLinuxSerial the Master is php, and you need the serial driver (uses devices like
-     /dev/ACMx or /dev/USBx).
+     /dev/ACMx or /dev/USBx). It is blocking the master and the php->Arduino message is limited to 60 char.
   
      Using USBphpTunnel (https://github.com/msillano/USBphpTunnel) the master is Arduino, and the
-     Android app uses ports like /dev/bus/dev/00X/00Y, so you don't need the serial driver.
+     Android app uses ports like /dev/bus/dev/00X/00Y, so you don't need the serial driver. It is blocking the 
+     master (arduino) and allow big messages.
      
+     Using USBphpTunnel_Fifo (https://github.com/msillano/USBphpTunnel_fifo) the master is php, it is NOT 
+     blocking the master, allows payload of 4k, allows concurrence.
      

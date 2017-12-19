@@ -17,16 +17,18 @@ void setup() {
   // reserve 64 bytes for the inputString (same as Serial buffer)
   inputString.reserve(64);
   // initialize serial:
-  Serial.begin(115200);
+  Serial.begin(115200);          // see serialArduino.sh
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
 }
 
-
-// This simple serial protocol:
-//  Input message "3xxxxcc"  - sintax: <0..9: command> [<moredata>]<crc-hex><\n>, max 64 bytes
-// Output message "LED ONcc" - sintax: <payload><crc-hex><\n>, any size
+//  The simple serial protocol used in test:
+//  Input message from php "3xxxxcc"  - sintax: <0..9: command> [<moredata>]<crc-hex><\n>, max 64 bytes
+//  Arduino MUST send always a response message:
+//  Output message from Arduino "LED ONcc" - sintax: <payload><crc-hex><\n>, any size
+//  Of course command, moredata, payload can change to suit needs.
+//  Limits: not '\n': it is used as terminator; in <payload> 'ERR'... is reserved to ERROR messages (see ArduinoLinuxSerial.php)
 
 void loop_messages()
 {

@@ -4,7 +4,7 @@
 
 // To test ArduinoLinuxSerial.php class, use this with testSerial.php
 int ledPin = 13;   // Arduino yun red led
-// for serial messages (first char = <x>, place for <order>)
+// for serial messages 
 char  r1[] = "LED ON";
 char  r2[] = "LED OFF";
 char err[] = "ERROR CODE";
@@ -25,8 +25,8 @@ void setup() {
 
 
 // This simple serial protocol:
-//  Input message "3xxxxcc"  - sintax: <0..9: command> [<moredata>]<crc-hex><\n>
-// Output message "LED ONcc" - sintax: <payload><crc-hex><\n>
+//  Input message "3xxxxcc"  - sintax: <0..9: command> [<moredata>]<crc-hex><\n>, max 64 bytes
+// Output message "LED ONcc" - sintax: <payload><crc-hex><\n>, any size
 
 void loop_messages()
 {
@@ -37,18 +37,18 @@ void loop_messages()
     switch (inmess.charAt(0))       // here commands switch
     {
       case '1':
-        payload = do_command1();
+        payload = do_command1();    // does command, returns answer
         break;
       case '2':
-        payload = do_command2();
+        payload = do_command2();     // does command, returns answer
         break;
       /* ... more ...*/
       default:
-        payload = String(err);
+        payload = String(err);       // bad command code
     }
   }
-  Serial.print(addCRC(payload));
-  Serial.write(10);
+  Serial.print(addCRC(payload));      // send answer
+  Serial.write(10);                   // add '\n'
   //  Serial.write(4);
 }
 
@@ -57,7 +57,7 @@ void loop() {
     // get the new byte:
     char inChar = (char)Serial.read();
     if (inChar == '\n') {
-      // if the incoming character is a newline, set a flag so the main loop can do something about it:
+      // if the incoming character is a newline, set a flag 
       stringComplete = true;
     } else
       // add it to the inputString:
@@ -65,9 +65,8 @@ void loop() {
   }
 
   if (stringComplete) {
-    loop_messages();
-    // clear the string:
-    inputString = "";
+    loop_messages();   // executes incoming message, send answer    
+    inputString = "";  // clear the string:
     stringComplete = false;
   }
 
@@ -91,7 +90,7 @@ String cutCRC(String rxmess) {
   return String("ERROR LCRC");
 }
 
-//==================================== do commands functions
+//==================================== do commands functions: ON / OFF LED13
 // command 1: LED13 ON
 String do_command1() {
   digitalWrite(ledPin, HIGH);

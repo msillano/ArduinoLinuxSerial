@@ -74,10 +74,10 @@ void loop() {
   // more loop actions
 }
 
-// ============================ locals, used by loop_messages
+// ============================ locals, used by loop_messages, mybe better to put it in a new library
 
 String addCRC(String txmess) {
-  byte  crc = 0;
+  byte  crc = 0;        // CRC seed: see ArduinoLinuxSerial.php
   for (unsigned int i = 0; i < txmess.length(); i++) crc ^= (byte)txmess.charAt(i); // the simplest CRC, only XOR
   String str_crc = String(crc, HEX);
   if (str_crc.length() == 1) return txmess + "0" + str_crc;

@@ -31,15 +31,21 @@ CONCLUSIONS
     What more?
     Enjoy.
 
-  ## see also
+ ## see also
   
-     Using ArduinoLinuxSerial the Master is php, and you need the serial driver (uses devices like
-     /dev/ACMx or /dev/USBx). It is blocking the master and the php->Arduino message is limited to 60 char.
   
-     Using USBphpTunnel (https://github.com/msillano/USBphpTunnel) the master is Arduino, and the
-     Android app uses ports like /dev/bus/dev/00X/00Y, so you don't need the serial driver. It is blocking the 
-     master (arduino) and allow big messages.
+I am very interested in using TVboxes (like MXQ) as dedicated WEB servers with Arduino extensions: so about (Linux + Android)-Arduino USB serial communication I tested many solutions:
+  
+     Using ArduinoLinuxSerial (https://github.com/msillano/ArduinoLinuxSerial) the Master is php, and you need the 
+     serial driver (uses devices like /dev/ACMx or /dev/USBx). It is blocking the master and the php->Arduino message
+     is limited to 60 char. Fastest.
+  
+     Using USBphpTunnel (https://github.com/msillano/USBphpTunnel) the master is Arduino, and the Android app uses 
+     ports like /dev/bus/dev/00X/00Y, so you don't need the serial driver. It is blocking the master (arduino) and 
+     it allows big messages. It works in background of the main php program. Useful for data logging.
      
-     Using USBphpTunnel_Fifo (https://github.com/msillano/USBphpTunnel_fifo) the master is php, it is NOT 
-     blocking the master, allows payload of 4k, allows concurrence.
+     Using USBphpTunnel_Fifo (https://github.com/msillano/USBphpTunnel_fifo) the master is php. It is NOT blocking the 
+     master, allows payload of 4k, allows concurrence. Works in background, and it is no fast (depending from polling 
+     Arduno frequence, 5-15 sec. plus processing time). Well placed for long Arduino processes (like waiting user 
+     actions).
      

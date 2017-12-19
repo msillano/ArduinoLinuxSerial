@@ -3,6 +3,7 @@
 // Le variabili globali usano 208 byte (8%) di memoria dinamica, lasciando altri 2352 byte liberi per le variabili locali. Il massimo è 2560 byte.
 
 // To test ArduinoLinuxSerial.php class, use this with testSerial.php
+// Not optimized to reduce footprint
 int ledPin = 13;   // Arduino yun red led
 // for serial messages 
 char  r1[] = "LED ON";

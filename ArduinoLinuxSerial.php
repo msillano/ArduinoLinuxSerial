@@ -35,10 +35,10 @@
 // SETUP 
 //    I used a TVbox MXQ: Android 4.4.2, Linux Ububuntu@server 3.10.33.
 //    To easy work i use WinSCP on Windows (https://winscp.net/eng/download.php)
-//    with 'Rooted SSH/SFTP Daemon' (https://www.apkmonk.com/app/web.oss.sshsftpDaemon/)
+//    and 'Rooted SSH/SFTP Daemon' (https://www.apkmonk.com/app/web.oss.sshsftpDaemon/)
 //    I installed also 'Palapa WEB server' 
 //    (https://play.google.com/store/apps/details?id=com.alfanla.android.pws&hl=en) and
-//     phpMyAdmin 4.1.14.1
+//     phpMyAdmin 4.1.14.1 (this version is required by Palapa).
 //  
 // 1) You must found the linux serial device for your Arduino board connected via USB:
 //    disconect and reconnect then you use the command 'dmesg | grep -i usb' or 
@@ -50,6 +50,8 @@
 //    wich contains stty and more Linux commands for Android.
 //   (see https://play.google.com/store/apps/details?id=com.spartacusrex.spartacuside&hl=en)
 // 3) modify serialArduino.sh: set starting #!/bin/sh, choose where to copy it, test it.
+//    In my MXQ i used /data/myfolder/serialArduino.sh.
+//    It MUST work with any user: see the status.txt file, updated from any run.
 //    I used  'FX-File explorer root Add-on' 
 //    (see https://play.google.com/store/apps/details?id=nextapp.fx.rr&hl=en)
 // 4) Update LINUXSCRIPT in ArduinoLinuxSerial.php
@@ -69,7 +71,7 @@
 
   define('LINUXSCRIPT', '/data/myfolder/serialArduino.sh' );  // this can change
 
-	class ArduinoLinuxSerial{
+class ArduinoLinuxSerial{
   
   private $theDevice;
   
@@ -78,16 +80,18 @@
    $this->theDevice = $device;
    shell_exec("sh -c ".LINUXSCRIPT);
    }
-
+	
+// adds CRC to txdata
 private function addCRC($txdata){
-  $crc = 0;
+  $crc = 0;                        // crc seed, same here and in testSerial.ino
   for ($i = 0; $i < strlen($txdata); $i++){
       $crc ^= ord($txdata[$i]);
       }
   $crc = "00".dechex($crc);    
   return ($txdata.substr($crc,-2));
 }
-
+	
+// tests and cut CRC from rxdata
 private function testCRC($rxdata){
   $data = substr($rxdata,0,-2);
   if ( strcmp ($this->addCRC($data),$rxdata ) == 0)
@@ -96,7 +100,7 @@ private function testCRC($rxdata){
       return false;   
 }
 
-//  low level send receive
+//  low level send receive (adds, cuts '\n')
 private function arduinoTXRX($data){
   if (!$as = fopen($this->theDevice,'w+b')){
     return "";
@@ -110,17 +114,17 @@ private function arduinoTXRX($data){
 // main function send receive, retry 3 times
 public function sendMessage($messg){
 //  $id = rand(65,90);   //  random ID for messages
-  $tosend = $this->addCRC($messg);
+  $tosend = $this->addCRC($messg);      // add CRC
   for ($i = 0; $i<2; $i++){
     $res = $this->arduinoTXRX($tosend);  // send-receive 2 times
-    if (($res != "") && ($rx = $this->testCRC($res)))
+    if (($res != "") && ($rx = $this->testCRC($res)))   // cuts CRC. The = is OK: it is assignation, not test
           return($rx);
     usleep(100);
     }
   $res = $this->arduinoTXRX($tosend);  //last send-receive
   if ($res == "")
     return "ERROR SERIAL" ; 
-  if ($rx = $this->testCRC($res)){     // '=' OK: it is assignation, not test
+  if ($rx = $this->testCRC($res)){     // The = is OK: it is assignation, not test
     return($rx);
     }
   return "ERROR ACRC" ;   

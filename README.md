@@ -14,9 +14,9 @@
   -  ERROR LCRC: bad CRC Linux -> Arduino
   -  ERROR ACRC: bad CRC Arduino -> Linux
   -  ERROR CODE: sended a command code not implemented in Arduino
-  -  ERROR SERIAL: USB not plugged, Arduino not running or php fail in open the serial device.
+  -  ERROR SERIAL: USB not plugged, Arduino not running or php fails on open the serial device.
        In this case the file 'status.txt' contains: 'stty: /dev/ttyACM0: Inappropriate ioctl for device' ?? 
-       Solution: disconect and reconnect Arduino USB
+       Solution: hot disconect and reconnect Arduino USB
 
  SETUP
 

@@ -5,7 +5,7 @@
   
   The master message max length is 60 char (serial Arduino rx buffer limit), the response (from Arduino) as no limits. The '\n' char is used internally as terminator. The protocol uses CRC8 to insure correctness. In case of error the message is resended 3 times before exit in error state.
   
- A Bash script (serialArduino.sh) is used to setup the USB device on Linux, after startup or USB connection.
+ A Bash script (serialArduino.sh) is used to setup the USB device on Linux, after startup or USB (re)connection.
   The serial communication is open for every message: in the Bash script the DTR pin is disabled to avoid the Arduino auto reset.
   (see: https://playground.arduino.cc/Main/DisablingAutoResetOnSerialConnection)
 

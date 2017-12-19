@@ -29,7 +29,7 @@ void setup() {
 //  Arduino MUST send always a response message:
 //  Output message from Arduino "LED ONcc" - sintax: <payload><crc-hex><\n>, any size
 //  Of course command, moredata, payload can change to suit needs.
-//  Limits: not '\n': it is used as terminator; in <payload> 'ERR'... is reserved to ERROR messages (see ArduinoLinuxSerial.php)
+//  Limits: not '\n': it is used as terminator; in input and in <payload> 'ERR'... is reserved to ERROR messages
 
 void loop_messages()
 {
